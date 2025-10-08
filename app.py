@@ -49,9 +49,35 @@ app.logger.setLevel(logging.INFO)
 
 
 def require_api_key(f):
-    """Decorator to require API key authentication"""
+    """Decorator to require API key authentication (skips for RapidAPI traffic)"""
     @wraps(f)
     def decorated_function(*args, **kwargs):
+        # Check if request is from RapidAPI proxy
+        rapidapi_host = request.headers.get('x-rapidapi-host')
+        rapidapi_key = request.headers.get('x-rapidapi-key')
+        rapidapi_proxy_secret = request.headers.get('x-rapidapi-proxy-secret')
+        
+        # If request is from RapidAPI, skip our API key validation
+        # RapidAPI handles authentication and forwards validated requests
+        if rapidapi_host or rapidapi_key or rapidapi_proxy_secret:
+            # Log RapidAPI request
+            log_request(f'RapidAPI:{rapidapi_key[:10] if rapidapi_key else "unknown"}', 
+                       request.args.get('url') or 'N/A', 200, "RapidAPI request")
+            # Use RapidAPI key for rate limiting
+            api_key_for_limits = rapidapi_key if rapidapi_key else 'rapidapi_default'
+            
+            # Apply rate limiting based on RapidAPI key
+            if not rate_limiter.check_rate_limit(api_key_for_limits):
+                log_request(api_key_for_limits, None, 429, "Rate limit exceeded")
+                return jsonify({
+                    'error': 'Rate limit exceeded',
+                    'message': 'You have exceeded your rate limit. Please try again later.',
+                    'retry_after': rate_limiter.get_retry_after(api_key_for_limits)
+                }), 429
+            
+            return f(*args, **kwargs)
+        
+        # For direct API access (non-RapidAPI), require our API key
         api_key = request.headers.get('X-API-Key') or request.args.get('api_key')
         
         if not api_key:
