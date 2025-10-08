@@ -1,0 +1,75 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv
+
+# Environment Variables
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Screenshots and Cache
+screenshots/
+cache/
+*.png
+*.jpg
+*.jpeg
+
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# API Keys (keep example, exclude actual keys)
+config/api_keys.json
+auth_service_old.py
+
+# Baselines and comparisons (generated data)
+baselines/
+comparisons/
+webhooks/
+
+# Test outputs
+test_results_youtube/
+test_new_features_output/
+test_screenshot.png
+
+# Temporary files
+*.tmp
+*.temp
+
+# Backup files
+*_old.py
+*_backup.*
+*.bak

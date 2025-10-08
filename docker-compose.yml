@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  screenshot-api:
+    build: .
+    container_name: screenshot-api
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./screenshots:/app/screenshots
+      - ./cache:/app/cache
+      - ./logs:/app/logs
+      - ./config:/app/config
+    environment:
+      - FLASK_ENV=production
+      - REQUESTS_PER_MINUTE=10
+      - REQUESTS_PER_HOUR=60
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

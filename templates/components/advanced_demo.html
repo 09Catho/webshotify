@@ -1,0 +1,556 @@
+<!-- Advanced Interactive Demo Component -->
+<div class="advanced-demo-wrapper">
+    <div class="demo-controls-panel">
+        <h3>🎮 Configure Your Screenshot</h3>
+        
+        <!-- URL Input -->
+        <div class="control-group">
+            <label>Target URL</label>
+            <input type="text" id="demoUrl" value="https://example.com" 
+                   placeholder="Enter any URL (https://...)">
+        </div>
+        
+        <!-- Browser Selection -->
+        <div class="control-group">
+            <label>🌐 Browser Engine</label>
+            <select id="demoBrowser">
+                <option value="chromium">Chromium (Chrome/Edge)</option>
+                <option value="firefox">Firefox (Gecko)</option>
+                <option value="webkit">WebKit (Safari)</option>
+            </select>
+        </div>
+        
+        <!-- Device Preset -->
+        <div class="control-group">
+            <label>📱 Device Preset</label>
+            <select id="demoDevice">
+                <option value="">Custom</option>
+                <option value="iphone13">iPhone 13</option>
+                <option value="iphone13_pro_max">iPhone 13 Pro Max</option>
+                <option value="ipad_pro">iPad Pro 11"</option>
+                <option value="samsung_s21">Samsung Galaxy S21</option>
+                <option value="desktop_1080p">Desktop 1080p</option>
+                <option value="desktop_4k">Desktop 4K</option>
+            </select>
+        </div>
+        
+        <!-- Viewport Size -->
+        <div class="control-group">
+            <label>📐 Viewport Size</label>
+            <div class="size-controls">
+                <div>
+                    <span>Width:</span>
+                    <input type="range" id="demoWidth" min="320" max="3840" value="1280" step="10">
+                    <span id="widthValue">1280px</span>
+                </div>
+                <div>
+                    <span>Height:</span>
+                    <input type="range" id="demoHeight" min="320" max="2160" value="720" step="10">
+                    <span id="heightValue">720px</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Format Selection -->
+        <div class="control-group">
+            <label>💾 Output Format</label>
+            <div class="format-buttons">
+                <button class="format-btn active" data-format="png">PNG</button>
+                <button class="format-btn" data-format="jpeg">JPEG</button>
+                <button class="format-btn" data-format="pdf">PDF</button>
+            </div>
+        </div>
+        
+        <!-- Feature Toggles -->
+        <div class="control-group">
+            <label>⚡ Quick Features</label>
+            <div class="feature-toggles">
+                <label class="toggle-switch">
+                    <input type="checkbox" id="darkMode">
+                    <span class="slider"></span>
+                    <span class="label">🌙 Dark Mode</span>
+                </label>
+                
+                <label class="toggle-switch">
+                    <input type="checkbox" id="fullPage">
+                    <span class="slider"></span>
+                    <span class="label">📄 Full Page</span>
+                </label>
+                
+                <label class="toggle-switch">
+                    <input type="checkbox" id="disableAnimations">
+                    <span class="slider"></span>
+                    <span class="label">⏸️ Freeze Animations</span>
+                </label>
+                
+                <label class="toggle-switch">
+                    <input type="checkbox" id="blockAds">
+                    <span class="slider"></span>
+                    <span class="label">🚫 Block Ads</span>
+                </label>
+                
+                <label class="toggle-switch">
+                    <input type="checkbox" id="scrollPage">
+                    <span class="slider"></span>
+                    <span class="label">📜 Lazy Load</span>
+                </label>
+            </div>
+        </div>
+        
+        <!-- Advanced Options -->
+        <details class="advanced-options">
+            <summary>🔧 Advanced Options</summary>
+            
+            <div class="control-group">
+                <label>Delay (seconds)</label>
+                <input type="number" id="demoDelay" min="0" max="30" value="0" step="0.5">
+            </div>
+            
+            <div class="control-group">
+                <label>Element Selector (CSS)</label>
+                <input type="text" id="demoSelector" placeholder="e.g., .header, #logo">
+            </div>
+            
+            <div class="control-group">
+                <label>Wait for Selector</label>
+                <input type="text" id="demoWaitSelector" placeholder="e.g., .loaded">
+            </div>
+            
+            <div class="control-group">
+                <label>Custom JavaScript</label>
+                <textarea id="demoScript" rows="3" placeholder="e.g., document.body.style.background='red'"></textarea>
+            </div>
+            
+            <div class="control-group">
+                <label>Media Type</label>
+                <select id="demoMediaType">
+                    <option value="">Default (screen)</option>
+                    <option value="print">Print</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label>Quality (JPEG only)</label>
+                <input type="range" id="demoQuality" min="1" max="100" value="80">
+                <span id="qualityValue">80</span>
+            </div>
+        </details>
+        
+        <!-- Action Buttons -->
+        <div class="demo-actions">
+            <button class="capture-btn" onclick="captureAdvancedDemo()">
+                🚀 Capture Screenshot
+            </button>
+            <button class="reset-btn" onclick="resetDemoForm()">
+                🔄 Reset
+            </button>
+        </div>
+        
+        <!-- Parameter Preview -->
+        <div class="params-preview">
+            <details>
+                <summary>📋 API Parameters Preview</summary>
+                <pre id="paramsCode"></pre>
+            </details>
+        </div>
+    </div>
+    
+    <!-- Result Display -->
+    <div class="demo-result-panel">
+        <div id="demoResultDisplay" class="result-display">
+            <div class="placeholder">
+                <div class="placeholder-icon">📸</div>
+                <h3>Try All Features!</h3>
+                <p>Configure options on the left and click "Capture Screenshot"</p>
+                <div class="feature-hints">
+                    <span>💡 Try different browsers</span>
+                    <span>💡 Toggle dark mode</span>
+                    <span>💡 Freeze animations</span>
+                    <span>💡 Select devices</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.advanced-demo-wrapper {
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.demo-controls-panel {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.demo-controls-panel h3 {
+    margin-bottom: 25px;
+    color: #667eea;
+    font-size: 22px;
+}
+
+.control-group {
+    margin-bottom: 20px;
+}
+
+.control-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+    font-size: 14px;
+}
+
+.control-group input[type="text"],
+.control-group input[type="number"],
+.control-group select,
+.control-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+.control-group input:focus,
+.control-group select:focus,
+.control-group textarea:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.size-controls > div {
+    margin-bottom: 10px;
+}
+
+.size-controls input[type="range"] {
+    width: calc(100% - 100px);
+    margin: 0 10px;
+}
+
+.format-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.format-btn {
+    flex: 1;
+    padding: 10px;
+    border: 2px solid #e5e7eb;
+    background: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.format-btn.active {
+    background: #667eea;
+    color: white;
+    border-color: #667eea;
+}
+
+.feature-toggles {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.toggle-switch {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    padding: 8px 12px;
+    background: #f9fafb;
+    border-radius: 8px;
+    transition: all 0.3s;
+    border: 2px solid transparent;
+}
+
+.toggle-switch:hover {
+    background: #f3f4f6;
+    border-color: #e5e7eb;
+}
+
+.toggle-switch input {
+    display: none;
+}
+
+.toggle-switch .slider {
+    display: inline-block;
+    width: 54px;
+    height: 30px;
+    background: #cbd5e1;
+    border-radius: 15px;
+    position: relative;
+    transition: all 0.4s;
+    margin-right: 12px;
+    flex-shrink: 0;
+    border: 2px solid #94a3b8;
+}
+
+.toggle-switch .slider:before {
+    content: "";
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    left: 2px;
+    top: 2px;
+    background: white;
+    border-radius: 50%;
+    transition: all 0.4s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+.toggle-switch input:checked + .slider {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-color: #667eea;
+    box-shadow: 0 0 12px rgba(102, 126, 234, 0.4);
+}
+
+.toggle-switch input:checked + .slider:before {
+    transform: translateX(24px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+.toggle-switch .label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.advanced-options {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f9fafb;
+    border-radius: 8px;
+}
+
+.advanced-options summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: #667eea;
+    margin-bottom: 15px;
+}
+
+.demo-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.capture-btn, .reset-btn {
+    flex: 1;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.capture-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.capture-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+}
+
+.reset-btn {
+    background: #f3f4f6;
+    color: #666;
+}
+
+.params-preview {
+    margin-top: 20px;
+    font-size: 12px;
+}
+
+.params-preview pre {
+    background: #1f2937;
+    color: #10b981;
+    padding: 15px;
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+.demo-result-panel {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+}
+
+.result-display {
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.placeholder {
+    text-align: center;
+    color: #6b7280;
+}
+
+.placeholder-icon {
+    font-size: 80px;
+    margin-bottom: 20px;
+}
+
+.placeholder h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.feature-hints {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.feature-hints span {
+    background: #f3f4f6;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.demo-screenshot-result {
+    text-align: center;
+}
+
+.demo-screenshot-result img {
+    max-width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    margin-bottom: 20px;
+}
+
+.result-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+    text-align: left;
+}
+
+.meta-item {
+    background: #f9fafb;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.meta-item strong {
+    display: block;
+    color: #667eea;
+    margin-bottom: 5px;
+}
+
+@media (max-width: 1024px) {
+    .advanced-demo-wrapper {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+<script>
+// Update parameter preview in real-time
+function updateParamsPreview() {
+    const params = {
+        url: document.getElementById('demoUrl').value,
+        browser: document.getElementById('demoBrowser').value,
+        device: document.getElementById('demoDevice').value || undefined,
+        width: parseInt(document.getElementById('demoWidth').value),
+        height: parseInt(document.getElementById('demoHeight').value),
+        format: document.querySelector('.format-btn.active').dataset.format,
+        dark_mode: document.getElementById('darkMode').checked,
+        fullpage: document.getElementById('fullPage').checked,
+        disable_animations: document.getElementById('disableAnimations').checked,
+        block_ads: document.getElementById('blockAds').checked,
+        scroll_page: document.getElementById('scrollPage').checked,
+        delay: parseFloat(document.getElementById('demoDelay').value) || undefined,
+        selector: document.getElementById('demoSelector').value || undefined,
+        wait_for_selector: document.getElementById('demoWaitSelector').value || undefined,
+        script: document.getElementById('demoScript').value || undefined,
+        media_type: document.getElementById('demoMediaType').value || undefined,
+        quality: parseInt(document.getElementById('demoQuality').value)
+    };
+    
+    // Remove undefined values
+    Object.keys(params).forEach(key => params[key] === undefined && delete params[key]);
+    
+    document.getElementById('paramsCode').textContent = JSON.stringify(params, null, 2);
+}
+
+// Format button handling
+document.querySelectorAll('.format-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        document.querySelectorAll('.format-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        updateParamsPreview();
+    });
+});
+
+// Slider value updates
+document.getElementById('demoWidth').addEventListener('input', function() {
+    document.getElementById('widthValue').textContent = this.value + 'px';
+    updateParamsPreview();
+});
+
+document.getElementById('demoHeight').addEventListener('input', function() {
+    document.getElementById('heightValue').textContent = this.value + 'px';
+    updateParamsPreview();
+});
+
+document.getElementById('demoQuality').addEventListener('input', function() {
+    document.getElementById('qualityValue').textContent = this.value;
+    updateParamsPreview();
+});
+
+// Update preview on any change
+document.querySelectorAll('input, select, textarea').forEach(el => {
+    el.addEventListener('change', updateParamsPreview);
+    el.addEventListener('input', updateParamsPreview);
+});
+
+// Initialize
+updateParamsPreview();
+
+function resetDemoForm() {
+    document.getElementById('demoUrl').value = 'https://example.com';
+    document.getElementById('demoBrowser').value = 'chromium';
+    document.getElementById('demoDevice').value = '';
+    document.getElementById('demoWidth').value = 1280;
+    document.getElementById('demoHeight').value = 720;
+    document.querySelectorAll('.format-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('[data-format="png"]').classList.add('active');
+    document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+    document.getElementById('demoDelay').value = 0;
+    document.getElementById('demoSelector').value = '';
+    document.getElementById('demoWaitSelector').value = '';
+    document.getElementById('demoScript').value = '';
+    document.getElementById('demoMediaType').value = '';
+    document.getElementById('demoQuality').value = 80;
+    document.getElementById('widthValue').textContent = '1280px';
+    document.getElementById('heightValue').textContent = '720px';
+    document.getElementById('qualityValue').textContent = '80';
+    updateParamsPreview();
+}
+</script>
