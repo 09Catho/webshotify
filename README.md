@@ -434,20 +434,6 @@ docker run -p 5000:5000 -e API_KEY_1=your-key webshotify
 
 ---
 
-## 💰 RapidAPI Marketplace
-
-List your API on RapidAPI to monetize it!
-
-See [RAPIDAPI_GUIDE.md](RAPIDAPI_GUIDE.md) for complete instructions on:
-- Creating RapidAPI account
-- Configuring pricing tiers
-- Listing your API
-- Marketing strategies
-
-**Potential Revenue:** $500-5,000/month 💵
-
----
-
 ## 📖 Documentation
 
 - **[README.md](README.md)** - This file (Quick start & API reference)
@@ -458,7 +444,6 @@ See [RAPIDAPI_GUIDE.md](RAPIDAPI_GUIDE.md) for complete instructions on:
 
 ### Deployment Guides
 - **[GCP_DEPLOYMENT_GUIDE.md](GCP_DEPLOYMENT_GUIDE.md)** - Google Cloud Platform
-- **[RAPIDAPI_GUIDE.md](RAPIDAPI_GUIDE.md)** - RapidAPI marketplace
 
 ### Feature Documentation
 - **[ENTERPRISE_FEATURES.md](ENTERPRISE_FEATURES.md)** - Advanced features
