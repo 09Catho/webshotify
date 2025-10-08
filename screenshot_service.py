@@ -95,11 +95,20 @@ class ScreenshotService:
                 }
                 
                 # Device emulation
-                if device and device in self.DEVICE_PRESETS:
-                    preset = self.DEVICE_PRESETS[device]
-                    context_options['viewport'] = {'width': preset['width'], 'height': preset['height']}
+                if device and device.lower() in self.DEVICE_PRESETS:
+                    preset = self.DEVICE_PRESETS[device.lower()]
+                    context_options['viewport'] = {
+                        'width': preset['width'], 
+                        'height': preset['height']
+                    }
                     context_options['user_agent'] = preset['user_agent']
                     context_options['is_mobile'] = preset.get('mobile', False)
+                    # Add device scale factor for mobile devices
+                    if preset.get('mobile', False):
+                        context_options['device_scale_factor'] = 2
+                    # Override width/height from device preset
+                    width = preset['width']
+                    height = preset['height']
                 else:
                     context_options['viewport'] = {'width': width, 'height': height}
                     if user_agent:
