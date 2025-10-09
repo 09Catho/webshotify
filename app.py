@@ -30,7 +30,7 @@ app.config['START_TIME'] = time.time()  # Track startup time for uptime calculat
 # Initialize services
 screenshot_service = ScreenshotService()
 auth_service = AuthService()
-rate_limiter = RateLimiter()
+rate_limiter = RateLimiter(requests_per_minute=60, requests_per_hour=1000)  # Increased for production
 cache_service = CacheService()
 comparison_service = ComparisonService()
 webhook_service = WebhookService()
